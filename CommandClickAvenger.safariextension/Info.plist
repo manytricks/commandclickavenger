@@ -15,12 +15,9 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1003</string>
+	<string>1005</string>
 	<key>Chrome</key>
-	<dict>
-		<key>Global Page</key>
-		<string>Global.html</string>
-	</dict>
+	<dict/>
 	<key>Content</key>
 	<dict>
 		<key>Scripts</key>
@@ -32,7 +29,7 @@
 		</dict>
 	</dict>
 	<key>Description</key>
-	<string>Disables “onclick” JavaScript event handlers that hijack web site navigation and thus screw up opening new tabs via command-click</string>
+	<string>Restores the ability to open tabs via command-click on pages where navigation has been hijacked by “onclick” JavaScript event handlers</string>
 	<key>ExtensionInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>Permissions</key>
