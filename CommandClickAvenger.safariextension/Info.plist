@@ -15,7 +15,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1005</string>
+	<string>1007</string>
 	<key>Chrome</key>
 	<dict/>
 	<key>Content</key>
@@ -29,7 +29,7 @@
 		</dict>
 	</dict>
 	<key>Description</key>
-	<string>Restores the ability to open tabs via command-click on pages where navigation has been hijacked by “onclick” JavaScript event handlers</string>
+	<string>Restore the ability to open links in tabs via Command-click on sites where it doesn't work as expected due to JavaScript.</string>
 	<key>ExtensionInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>Permissions</key>
