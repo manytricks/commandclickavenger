@@ -5,10 +5,10 @@ function referenceForElement(theElement) {
 		return theElement.href;			// identify proper links or...
 	}
 	var theNestedAnchors = theElement.getElementsByTagName('A');
-	var anIndex;
+	var i;
 	var aReference;
-	for (anIndex = 0; anIndex<theNestedAnchors.length; anIndex++) {
-		aReference = theNestedAnchors[anIndex].href;
+	for (i = 0; i<theNestedAnchors.length; i++) {
+		aReference = theNestedAnchors[i].href;
 		if (aReference) {
 			return aReference;			// ...elements that contain at least one proper link
 		}
@@ -18,23 +18,21 @@ function referenceForElement(theElement) {
 
 
 // Step 1: Deal with onclick handlers by doing one of two things (cf. replaceOnclickHandlers):
-//
-// - Replace them with an onclick handler that calls the original handler unless cmd is held
-// - Simply remove offending onclick handlers
-
-var replaceOnclickHandlers = true;
+// 	- Wrap them with a handler that calls the original handler unless cmd is held
+// 	- Simply remove offending onclick handlers
 
 var theElements = document.getElementsByTagName('*');
-var anElementIndex;
+var i;
 var anElement;
 var anOnclickHandler;
-for (anElementIndex = 0; anElementIndex<theElements.length; anElementIndex++) {
-	anElement = theElements[anElementIndex];
+var replaceOnclickHandlers = true;
+for (i = 0; i<theElements.length; i++) {
+	anElement = theElements[i];
 	anOnclickHandler = anElement.onclick;
 	if ((anOnclickHandler) && (referenceForElement(anElement))) {
 		if (replaceOnclickHandlers) {
 			anElement.com_manytricks_commandclickavenger_originalonclick = anOnclickHandler;
-			anElement.onclick = function(theEvent) {
+			anElement.onclick = function (theEvent) {
 				return (((theEvent) ? theEvent : window.event).metaKey || (this.com_manytricks_commandclickavenger_originalonclick.call(this, theEvent)!==false));
 			}
 		} else if (('Lazy String Conversion: ' + anOnclickHandler).indexOf('.location.href=')!==-1) {
@@ -46,7 +44,7 @@ for (anElementIndex = 0; anElementIndex<theElements.length; anElementIndex++) {
 
 // Step 2: Knock out modern event listeners with our own event listener if the cmd key is held
 
-window.addEventListener('click', function(theEvent) {
+window.addEventListener('click', function (theEvent) {
 	if (theEvent.metaKey && (referenceForElement(theEvent.target))) {
 		theEvent.stopPropagation();
 	}
