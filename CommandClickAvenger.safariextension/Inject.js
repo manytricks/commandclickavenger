@@ -1,10 +1,10 @@
 // Copyright © 2013 Many Tricks (When in doubt, consider this MIT-licensed)
 
 function referenceForElement(theElement) {
-	if (theElement.nodeName=='A') {
+	if (theElement.nodeName.toLowerCase()=='a') {
 		return theElement.href;				// identify anchors with a reference or...
 	}
-	var theNestedAnchors = theElement.getElementsByTagName('A');
+	var theNestedAnchors = theElement.getElementsByTagName('a');
 	var i;
 	var aReference;
 	for (i = 0; i<theNestedAnchors.length; i++) {
@@ -14,7 +14,7 @@ function referenceForElement(theElement) {
 		}
 	}
 	while (theElement = theElement.parentNode) {
-		if (theElement.nodeName=='A') {
+		if (theElement.nodeName.toLowerCase()=='a') {
 			return theElement.href;			// ...elements that are nested in an anchor with a reference
 		}
 	}
