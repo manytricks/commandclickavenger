@@ -2,7 +2,7 @@
 
 function referenceForElement(theElement) {
 	if (theElement.nodeName=='A') {
-		return theElement.href;			// identify proper links or...
+		return theElement.href;				// identify anchors with a reference or...
 	}
 	var theNestedAnchors = theElement.getElementsByTagName('A');
 	var i;
@@ -10,7 +10,12 @@ function referenceForElement(theElement) {
 	for (i = 0; i<theNestedAnchors.length; i++) {
 		aReference = theNestedAnchors[i].href;
 		if (aReference) {
-			return aReference;			// ...elements that contain at least one proper link
+			return aReference;				// ...elements that contain at least one anchor with a reference or...
+		}
+	}
+	while (theElement = theElement.parentNode) {
+		if (theElement.nodeName=='A') {
+			return theElement.href;			// ...elements that are nested in an anchor with a reference
 		}
 	}
 	return null;
@@ -18,7 +23,7 @@ function referenceForElement(theElement) {
 
 
 // Step 1: Deal with onclick handlers by doing one of two things (cf. replaceOnclickHandlers):
-// 	- Wrap them with a handler that calls the original handler unless cmd is held
+// 	- Wrap them in a handler that calls the original handler unless cmd is held
 // 	- Simply remove offending onclick handlers
 
 var theElements = document.getElementsByTagName('*');
@@ -31,9 +36,9 @@ for (i = 0; i<theElements.length; i++) {
 	anOnclickHandler = anElement.onclick;
 	if ((anOnclickHandler) && (referenceForElement(anElement))) {
 		if (replaceOnclickHandlers) {
-			anElement.com_manytricks_commandclickavenger_originalonclick = anOnclickHandler;
+			anElement['com.manytricks.CommandClickAvenger.OriginalOnclickHandler'] = anOnclickHandler;
 			anElement.onclick = function (theEvent) {
-				return (((theEvent) ? theEvent : window.event).metaKey || (this.com_manytricks_commandclickavenger_originalonclick.call(this, theEvent)!==false));
+				return (((theEvent) ? theEvent : window.event).metaKey || (this['com.manytricks.CommandClickAvenger.OriginalOnclickHandler'].call(this, theEvent)!==false));
 			}
 		} else if (('Lazy String Conversion: ' + anOnclickHandler).indexOf('.location.href=')!==-1) {
 			anElement.removeAttribute('onclick');
