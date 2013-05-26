@@ -38,7 +38,8 @@ for (i = 0; i<theElements.length; i++) {
 		if (replaceOnclickHandlers) {
 			anElement['com.manytricks.CommandClickAvenger.OriginalOnclickHandler'] = anOnclickHandler;
 			anElement.onclick = function (theEvent) {
-				return (((theEvent) ? theEvent : window.event).metaKey || (this['com.manytricks.CommandClickAvenger.OriginalOnclickHandler'].call(this, theEvent)!==false));
+				var theTarget = theEvent.currentTarget;
+				return (((theEvent) ? theEvent : window.event).metaKey || (theTarget['com.manytricks.CommandClickAvenger.OriginalOnclickHandler'].call(theTarget, theEvent)!==false));
 			}
 		} else if (('Lazy String Conversion: ' + anOnclickHandler).indexOf('.location.href=')!==-1) {
 			anElement.removeAttribute('onclick');
