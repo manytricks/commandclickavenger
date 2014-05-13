@@ -1,4 +1,4 @@
-// Copyright © 2013 Many Tricks (When in doubt, consider this MIT-licensed)
+// Copyright © 2014 Many Tricks (When in doubt, consider this MIT-licensed)
 
 function referenceForElement(theElement) {
 	if (theElement.nodeName.toLowerCase()=='a') {
@@ -21,6 +21,8 @@ function referenceForElement(theElement) {
 	return null;
 }
 
+var currentClickEvent = null;
+
 
 // Step 1: Deal with onclick handlers by doing one of two things (cf. replaceOnclickHandlers):
 // 	- Wrap them in a handler that calls the original handler unless cmd is held
@@ -38,8 +40,11 @@ for (i = 0; i<theElements.length; i++) {
 		if (replaceOnclickHandlers) {
 			anElement['com.manytricks.CommandClickAvenger.OriginalOnclickHandler'] = anOnclickHandler;
 			anElement.onclick = function (theEvent) {
+				if (!theEvent) {
+					theEvent = currentClickEvent;
+				}
 				var theTarget = theEvent.currentTarget;
-				return (((theEvent) ? theEvent : window.event).metaKey || (theTarget['com.manytricks.CommandClickAvenger.OriginalOnclickHandler'].call(theTarget, theEvent)!==false));
+				return (theEvent.metaKey || (theTarget['com.manytricks.CommandClickAvenger.OriginalOnclickHandler'].call(theTarget, theEvent)!==false));
 			}
 		} else if (('Lazy String Conversion: ' + anOnclickHandler).indexOf('.location.href=')!==-1) {
 			anElement.removeAttribute('onclick');
@@ -51,6 +56,7 @@ for (i = 0; i<theElements.length; i++) {
 // Step 2: Knock out modern event listeners with our own event listener if the cmd key is held
 
 window.addEventListener('click', function (theEvent) {
+	currentClickEvent = theEvent;
 	if (theEvent.metaKey && (referenceForElement(theEvent.target))) {
 		theEvent.stopPropagation();
 	}
