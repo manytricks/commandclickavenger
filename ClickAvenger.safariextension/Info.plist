@@ -5,19 +5,22 @@
 	<key>Author</key>
 	<string>Many Tricks</string>
 	<key>Builder Version</key>
-	<string>9537.75.14</string>
+	<string>11601.4.4</string>
 	<key>CFBundleDisplayName</key>
-	<string>⌘ – Click Avenger</string>
+	<string>Click Avenger</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.manytricks.Safari.CommandClickAvenger</string>
+	<string>com.manytricks.Safari.ClickAvenger</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.4</string>
+	<string>1.1</string>
 	<key>CFBundleVersion</key>
-	<string>1012</string>
+	<string>1013</string>
 	<key>Chrome</key>
-	<dict/>
+	<dict>
+		<key>Global Page</key>
+		<string>Global.html</string>
+	</dict>
 	<key>Content</key>
 	<dict>
 		<key>Scripts</key>
@@ -29,7 +32,9 @@
 		</dict>
 	</dict>
 	<key>Description</key>
-	<string>Restore the ability to open links in tabs via Command-click on sites where it doesn't work as expected due to JavaScript.</string>
+	<string>Eliminate on-click handlers associated with links.</string>
+	<key>DeveloperIdentifier</key>
+	<string>0000000000</string>
 	<key>ExtensionInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>Permissions</key>
@@ -43,7 +48,7 @@
 		</dict>
 	</dict>
 	<key>Update Manifest URL</key>
-	<string>http://manytricks.com/safariextensions/updatemanifest.plist</string>
+	<string>https://manytricks.com/safariextensions/updatemanifest.plist</string>
 	<key>Website</key>
 	<string>http://manytricks.com</string>
 </dict>
