@@ -5,7 +5,7 @@
 	<key>Author</key>
 	<string>Many Tricks</string>
 	<key>Builder Version</key>
-	<string>11601.4.4</string>
+	<string>11601.5.13</string>
 	<key>CFBundleDisplayName</key>
 	<string>Click Avenger</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.1</string>
 	<key>CFBundleVersion</key>
-	<string>1013</string>
+	<string>1014</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Global Page</key>
@@ -34,7 +34,7 @@
 	<key>Description</key>
 	<string>Eliminate on-click handlers associated with links.</string>
 	<key>DeveloperIdentifier</key>
-	<string>0000000000</string>
+	<string>METK467GW2</string>
 	<key>ExtensionInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>Permissions</key>

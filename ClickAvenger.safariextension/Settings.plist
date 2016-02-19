@@ -3,8 +3,6 @@
 <plist version="1.0">
 <array>
 	<dict>
-		<key>DefaultValue</key>
-		<string>false</string>
 		<key>Key</key>
 		<string>com.manytricks.ClickAvenger.CommandOnly</string>
 		<key>Title</key>
