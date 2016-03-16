@@ -3,16 +3,26 @@
 <plist version="1.0">
 <array>
 	<dict>
+		<key>DefaultValue</key>
+		<string>com.manytricks.ClickAvenger.AutoAvenge.Disabled</string>
 		<key>Key</key>
-		<string>com.manytricks.ClickAvenger.CommandOnly</string>
+		<string>com.manytricks.ClickAvenger.AutoAvenge.Scope</string>
 		<key>Title</key>
-		<string>Avenge ⌘-clicks only</string>
+		<string>Auto-Avenge</string>
+		<key>Titles</key>
+		<array>
+			<string>Disable</string>
+			<string>⌘-Clicks</string>
+			<string>Clicks and ⌘-Clicks</string>
+		</array>
 		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>Type</key>
-		<string>Separator</string>
+		<string>PopUpButton</string>
+		<key>Values</key>
+		<array>
+			<string>com.manytricks.ClickAvenger.AutoAvenge.Disabled</string>
+			<string>com.manytricks.ClickAvenger.AutoAvenge.CommandClick</string>
+			<string>com.manytricks.ClickAvenger.AutoAvenge.Click</string>
+		</array>
 	</dict>
 	<dict>
 		<key>Key</key>

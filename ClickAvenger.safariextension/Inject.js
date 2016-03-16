@@ -52,41 +52,60 @@ var currentClickEvent = null;
 safari.self.addEventListener('message', function (theEvent) {
 	if (theEvent.name=='com.manytricks.ClickAvenger.DeliverSettings') {
 		var theSettings = theEvent.message;
-		var theWhitelist = theSettings['Whitelist'];
-		var theWhitelistExpression = (((theWhitelist) && (theWhitelist!='')) ? new RegExp(theWhitelist, 'i') : null);
-		var theDocumentURL = document.location.href;
-		var theElements = document.getElementsByTagName('*');
-		var i;
-		var anElement;
-		var anOnclickHandler;
-		var avengeAllEvents = !theSettings['CommandOnly'];
-		for (i = 0; i<theElements.length; i++) {
-			anElement = theElements[i];
-			anOnclickHandler = anElement.onclick;
-			if ((anOnclickHandler) && elementShouldBeAvenged(anElement, theWhitelistExpression, theDocumentURL)) {
-				if (avengeAllEvents) {
-					anElement.removeAttribute('onclick');	// knock out onclick handler entirely
-				} else {
-					anElement['com.manytricks.ClickAvenger.OriginalOnclickHandler'] = anOnclickHandler;
-					anElement.onclick = function (theEvent) {
-						if (!theEvent) {
-							theEvent = currentClickEvent;
+		var autoAvengeCommandClicks = false;
+		var autoAvengeAllClicks = false;
+		switch (theSettings['AutoAvenge.Scope']) {
+			case 'com.manytricks.ClickAvenger.AutoAvenge.CommandClick':
+				autoAvengeCommandClicks = true;
+				break;
+			case 'com.manytricks.ClickAvenger.AutoAvenge.Click':
+				autoAvengeCommandClicks = true;
+				autoAvengeAllClicks = true;
+				break;
+			default:
+				break;
+		}
+		if (autoAvengeCommandClicks) {
+			var theWhitelist = theSettings['AutoAvenge.Whitelist'];
+			var theWhitelistExpression = (((theWhitelist) && (theWhitelist!='')) ? new RegExp(theWhitelist, 'i') : null);
+			var theDocumentURL = document.location.href;
+			var theElements = document.getElementsByTagName('*');
+			var i;
+			var anElement;
+			var anOnclickHandler;
+			for (i = 0; i<theElements.length; i++) {
+				anElement = theElements[i];
+				anOnclickHandler = anElement.onclick;
+				if ((anOnclickHandler) && elementShouldBeAvenged(anElement, theWhitelistExpression, theDocumentURL)) {
+					if (autoAvengeAllClicks) {
+						anElement.removeAttribute('onclick');	// knock out onclick handler entirely
+					} else {
+						anElement['com.manytricks.ClickAvenger.OriginalOnclickHandler'] = anOnclickHandler;
+						anElement.onclick = function (theEvent) {
+							if (!theEvent) {
+								theEvent = currentClickEvent;
+							}
+							if (theEvent.metaKey) {
+								return true;	// skip original handler if a modifier key is held
+							}
+							var theTarget = theEvent.currentTarget;
+							return (theTarget['com.manytricks.ClickAvenger.OriginalOnclickHandler'].call(theTarget, theEvent)!==false);
 						}
-						if (theEvent.metaKey) {
-							return true;	// skip original handler if a modifier key is held
-						}
-						var theTarget = theEvent.currentTarget;
-						return (theTarget['com.manytricks.ClickAvenger.OriginalOnclickHandler'].call(theTarget, theEvent)!==false);
 					}
 				}
 			}
+			window.addEventListener('click', function (theEvent) {
+				currentClickEvent = theEvent;
+				if ((autoAvengeAllClicks || (theEvent.metaKey)) && elementShouldBeAvenged(theEvent.target, theWhitelistExpression, theDocumentURL)) {
+					theEvent.stopPropagation();	// knock out modern event listener
+				}
+			}, true);
 		}
-		window.addEventListener('click', function (theEvent) {
-			currentClickEvent = theEvent;
-			if ((avengeAllEvents || (theEvent.metaKey)) && elementShouldBeAvenged(theEvent.target, theWhitelistExpression, theDocumentURL)) {
-				theEvent.stopPropagation();	// knock out modern event listener
-			}
-		}, true);
+		if (!autoAvengeAllClicks) {
+			document.addEventListener('contextmenu', function (theEvent) {
+				safari.self.tab.setContextMenuEventUserInfo(theEvent, referenceForElement(theEvent.target));
+			}, false);
+		}
 	}
 }, false);
 
